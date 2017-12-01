@@ -1,0 +1,75 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+	<title>Munchy Mallards</title>
+	<style></style>
+	<script src="/socket.io/socket.io.js"></script>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div id="title" class="col-md-12">
+				Munchy Mallards
+				<div class="caption">
+					<a href="https://remixie.com">Remixie Recreations</a> &copy; 2017
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="content col-md-12">
+
+				<!--<button id="show_info" class="btn btn-warning">
+					Show Info
+				</button>-->
+
+					<div class="col-md-2 hidden-sm hidden-xs" id="left_duck">
+						<div class="scores"> Opponent Score
+							<div id="op_score"></div>
+						</div>
+					</div>
+
+
+
+					<div id="center-div" class="col-md-8 col-sm-12 col-xs-12">
+
+						<div id="connection-message"></div>
+						<div id="results"></div>
+						<div id="timer"></div>
+
+						<div id="menu">
+							<button id="help" class="btn btn-warning">
+								Help
+							</button>
+							<button id="play" class="btn btn-warning">
+								Play
+							</button>
+							<div id="count"></div>
+						</div>
+
+						<div id="berries_remaining"></div>
+						<div id="stage"></div>
+
+					</div>
+
+					<div class="col-md-2 hidden-sm hidden-xs" id="right_duck">
+						<div class="scores"> My Score
+							<div id="my_score"></div>
+						</div>
+					</div>
+
+			</div>
+			<!-- content -->
+		</div>
+		<!-- row -->
+
+	</div>
+	<!-- container -->
+</body>
+<script src="/static/bundle.js"></script>
+<link rel='stylesheet' href="font/typicons.css">
+</html>

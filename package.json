@@ -1,0 +1,23 @@
+{
+	"name": "munchy",
+	"version": "1.0.0",
+	"description": "multiplayer game",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server.js",
+		"build": "browserify static/game.js -o static/bundle.js & node  server.js",
+		"run-ngrok": "ngrok.exe http 5000",
+		"go-online": "lt --port 5000",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Francisco Salinas",
+	"dependencies": {
+		"bootbox": "^4.4.0",
+		"express": "^4.16.2",
+		"socket.io": "^2.0.4",
+		"bootstrap": "^3.3.7",
+		"jquery": "^3.2.1",
+		"typicons.font": "^2.0.9",
+		"konva": "^1.7.5"
+	}
+}

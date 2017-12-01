@@ -1,0 +1,185 @@
+@font-face {
+	font-family: 'typicons';
+	
+	src: url("font/typicons.eot");
+	src: url("font/typicons.eot?#iefix") format('embedded-opentype'),
+		 url("font/typicons.woff") format('woff'),
+		 url("font/typicons.ttf") format('truetype'),
+		 url("font/typicons.svg#typicons") format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-size: 20px;
+}
+
+.typcn{
+	font-size: 25px;
+}
+
+body {
+	height: 100%;
+	text-align: center;
+	font-family: arial;
+	background-color: #FFF2CD;
+}
+a:link{
+	color: #d70719;
+}
+
+a:active{
+	color: #d70719;
+}
+
+a:visited{
+	color: #d70719;
+}
+
+a:hover{
+	color: #81b83c;
+}
+
+#title {
+	margin-top: 20px;
+	color: #d70719;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#count{
+	margin: 20px 0px 0px 0px;
+}
+
+.caption{
+	margin: 0px 0px 20px 0px;
+	font-size: 14px;
+}
+
+.content{
+	color: #d70719;
+	padding: 0px 0px 0px 0px;
+}
+
+.btn,
+.btn:focus {
+	padding: 10px 30px 10px 30px;
+	border-radius: 0px;
+	background-color: #d70719;
+	font-size: 20px;
+	border-width: 0px;
+}
+
+.modal-header {
+	border-bottom: 0px solid #e5e5e5;
+}
+
+.modal-footer {
+	border-top: 0px solid #e5e5e5;
+}
+
+
+.btn-default{
+	color: white;
+}
+
+.btn-default:hover {
+	color: white;
+}
+
+.form-control {
+	border: 1px dashed #d70719;
+	border-radius: 0px;
+	color: #d70719;
+	font-weight: bold;
+}
+
+.form-control:focus {
+	border: 1px dashed #81b83c;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
+
+.bootbox-close-button{
+	display: none;
+}
+
+.btn:hover {
+	background-color: #81b83c;
+}
+
+.btn:active {
+	background-color: #d70719 !important;
+}
+
+.modal-content{
+	background-color: #FFF2CD;
+	color: #d70719;
+}
+
+.modal-footer{
+	text-align: center;
+}
+
+.bootbox-input{
+	background-color: #FFF2CD;
+}
+
+.username_span{
+	color: #81b83c;
+}
+
+#connection-message {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#timer {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#center-div	{
+	padding: 30px 0px 30px 0px;
+	border: 10px dashed #d70719;
+}
+
+#left_duck {
+	height: 150px;
+	background-image: URL('/static/img/left_duck.png');
+	background-size: 90% auto;
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+#right_duck {
+	height: 150px;
+	background-image: URL('/static/img/right_duck.png');
+	background-size: 90% auto;
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+#stage{
+	display:none;
+}
+
+.konvajs-content {
+	display: inline-block;
+}
+
+.scores {
+	margin-top: -200px; 
+	font-weight: bold;
+	display: none;
+}
+
+#results{
+	position: absolute;
+    font-size: 20px;
+    opacity: 1;
+}
+
+#berries_remaining{
+	position: absolute;
+    font-size: 300px;
+	opacity: .3;
+	width: 100%;
+}
