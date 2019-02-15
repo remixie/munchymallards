@@ -32089,10 +32089,12 @@ socket.on('set-cursor-type', function (cursor_type) {
 	cursor_image.src = '/static/img/'+cursor_type+'.png';
 });
 
-socket.on('timer', function (m1, m1_device, m2, m2_device, count) {
+socket.on('timer', function (data) {
 	//displays countdown
 
-	if (count == 0) {
+	data = JSON.parse(data);
+
+	if (data.time == 0) {
 
 		$("#timer").text("");
 		$("#stage").show();
@@ -32104,9 +32106,9 @@ socket.on('timer', function (m1, m1_device, m2, m2_device, count) {
 			$('#connection-message').text("");
 		}
 
-		$("#timer").html("<br><span class='typcn typcn-device-"+m1_device+"'></span>&nbsp;&nbsp;&nbsp;<span class='username_span'>"+m1+"</span> "+
-		" vs <span class='username_span'>"+m2+"</span>&nbsp;&nbsp;&nbsp;<span class='typcn typcn-device-"+m2_device+"'></span><br><br>"+
-		"This game starts in " + count + "!");
+		$("#timer").html("<br><span class='typcn typcn-device-"+data.m1_device+"'></span>&nbsp;&nbsp;&nbsp;<span class='username_span'>"+data.m1_user+"</span> "+
+		" vs <span class='username_span'>"+data.m2_user+"</span>&nbsp;&nbsp;&nbsp;<span class='typcn typcn-device-"+data.m2_device+"'></span><br><br>"+
+		"This game starts in " + data.time + "!");
 	}
 
 });

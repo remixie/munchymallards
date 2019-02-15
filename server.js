@@ -26,7 +26,8 @@ app.get('/', function (request, response) {
 
 // Starts the server.
 server.listen(PORT, function () {
-	console.log('Starting server on port ' + PORT);
+	console.log('Starting server on port '+ PORT);
+
 });
 
 
@@ -39,6 +40,7 @@ io.on('connection', function (socket) {
 		"socket": socket,
 		"score": 0
 	};
+	//create mallard
 
 
 	socket.emit('set-id', socket.id);
@@ -47,7 +49,7 @@ io.on('connection', function (socket) {
 	socket.emit('count', io.engine.clientsCount);
 	//send mallard count to client
 
-	console.log('\n' + socket.id + ' has connected.');
+	console.log('\n'+socket.id + ' has connected.');
 	//inform of new connection
 
 	socket.on('show_info', function () {
@@ -73,11 +75,11 @@ io.on('connection', function (socket) {
 	socket.on('findMallard', function (device_type) {
 		//client started a search for a mallard
 
-		if (Object.keys(socket.rooms)[1] != undefined) {
+		if(Object.keys(socket.rooms)[1] != undefined){
 			var current_room = socket.rooms[Object.keys(socket.rooms)[1]];
-
+			
 			//console.log("room to delete: "+current_room);
-
+			
 			deleteRoom(current_room);
 		}
 
@@ -87,43 +89,44 @@ io.on('connection', function (socket) {
 		mallardQueue.push(socket.id);
 		//add client's ID to queue
 
-		if (mallards[socket.id].device_type == "") {
+		if(mallards[socket.id].device_type==""){
 			mallards[socket.id].device_type = device_type;
 		}
 
-		if (mallards[socket.id].username == "") {
+		if(mallards[socket.id].username==""){
 			socket.emit('get-username');
-		} else {
+		}
+		else{
 			socket.emit('queue_message', 'Finding a mallard...');
 		}
 
 		console.log('\n' + socket.id + ' has queued up.');
 		//inform that the client has queued
-
+		
 
 		if (mallardQueue.length == 2) {
-			//if two mallards are in queue
+		//if two mallards are in queue
 
 			var mallardOne = mallards[mallardQueue[0]];
 			var mallardTwo = mallards[mallardQueue[1]];
 
 			mallardQueue = [];
 			//empty the queue
+			
+				var check = setInterval(function(){
+					if(mallardOne.username!="" && mallardTwo.username!=""){
 
-			var check = setInterval(function () {
-				if (mallardOne.username != "" && mallardTwo.username != "") {
+						clearInterval(check);
+						//clear interval
 
-					clearInterval(check);
-					//clear interval
-
-					room_setup(mallardOne.socket, mallardTwo.socket);
-					//set up a room
-
-				}
-			}, 1000);
+						room_setup(mallardOne.socket, mallardTwo.socket);
+						//set up a room
+						
+					}
+				},1000);
 
 		}
-	}); //end of findMallard
+	});
 
 	socket.on('set-username', function (username) {
 		mallards[socket.id].username = username;
@@ -133,8 +136,8 @@ io.on('connection', function (socket) {
 
 	socket.on('disconnecting', function () {
 
-		for (var m in mallardQueue) {
-			if (mallardQueue[m] == socket.id) {
+		for(var m in mallardQueue){
+			if(mallardQueue[m] == socket.id){
 				mallardQueue = [];
 			}
 		}
@@ -142,12 +145,12 @@ io.on('connection', function (socket) {
 		var current_room = socket.rooms[Object.keys(socket.rooms)[1]];
 		var room_index = get_room_index(current_room);
 
-		if (room_index != undefined) {
-			if (mallardRooms[room_index].berries_remaining != 0) {
+		if(room_index != undefined){
+			if(mallardRooms[room_index].berries_remaining !=0){
 				io.to(current_room).emit('forfeit');
 				//inform that the player left
 			}
-
+			
 			deleteRoom(current_room);
 		}
 
@@ -167,8 +170,10 @@ io.on('connection', function (socket) {
 	socket.on('send-cursor', function (x, y) {
 		var opponentSocket = mallards[getOpponentSocketID(socket.id, socket.rooms[Object.keys(socket.rooms)[1]])].socket;
 
+
 		opponentSocket.emit('get-cursor', x, y);
 	});
+
 
 	socket.on('berry_click', function (index) {
 
@@ -177,29 +182,29 @@ io.on('connection', function (socket) {
 		//console.log(socket.id+" clicked on berry "+index+" in room "+current_room);
 
 		var room_index = get_room_index(current_room);
-
-		if (mallardRooms[room_index] != undefined && mallardRooms[room_index].berry_list.indexOf(index) == -1) {
-
+		
+		if(mallardRooms[room_index] != undefined && mallardRooms[room_index].berry_list.indexOf(index)==-1){
+						
 			//console.log("Room "+current_room+" has "+mallardRooms[room_index].berries_remaining+ " berries remaining.");
-
+			
 			mallardRooms[room_index].berries_remaining -= 1;
-
+				
 			//socket.emit('delete_berry', index); //show delete to the same user
-
+				
 			io.to(current_room).emit('delete_berry', index); //show delete to both users
 
 			mallardRooms[room_index].berry_list.push(index);
 			mallards[socket.id].score += 5;
-
+				
 			var data = {
 				"id": socket.id,
 				"score": mallards[socket.id].score,
 				"berries_left": mallardRooms[room_index].berries_remaining
 			};
-
+			
 			io.to(current_room).emit('update_scores', data);
-
-			if (mallardRooms[room_index].berries_remaining <= 0) {
+							
+			if(mallardRooms[room_index].berries_remaining <= 0){
 				io.to(current_room).emit('no_more_berries');
 			}
 		}
@@ -207,31 +212,32 @@ io.on('connection', function (socket) {
 
 });
 
-function getOpponentSocketID(id, room_id) {
-	if (room_id.substring(0, 20) == id) {
+function getOpponentSocketID(id, room_id){
+	if(room_id.substring(0, 20) == id){
 		return room_id.substring(20, 40);
-	} else {
+	}
+	else{
 		return room_id.substring(0, 20);
 	}
 }
 
-function get_room_index(room_id) {
-
-	for (var i = 0; i < mallardRooms.length; i++) {
-
-		if (mallardRooms[i].id == room_id) {
-			return i;
+function get_room_index(room_id){
+	
+		for(var i = 0; i < mallardRooms.length; i++) {
+		
+			if(mallardRooms[i].id == room_id) {
+				return i;
+			}
 		}
 	}
-}
 
-function deleteRoom(room_id) {
+function deleteRoom(room_id){
+	
+		var room_index = get_room_index(room_id);
 
-	var room_index = get_room_index(room_id);
-
-	if (room_index != undefined) {
-		mallardRooms.splice(room_index, 1);
-	}
+		if(room_index !=undefined){
+			mallardRooms.splice(room_index, 1);
+		}
 }
 
 function room_setup(mallardOne_socket, mallardTwo_socket) {
@@ -241,11 +247,7 @@ function room_setup(mallardOne_socket, mallardTwo_socket) {
 	var room_id = mallardOne_socket.id + mallardTwo_socket.id;
 	//make a game id by concatenating the two IDs
 
-	mallardRooms.push({
-		id: room_id,
-		berries_remaining: 51,
-		berry_list: []
-	});
+	mallardRooms.push({id: room_id, berries_remaining: 51, berry_list: []});
 
 	mallardOne_socket.emit('set-cursor-type', mallards[mallardTwo_socket.id].device_type);
 	mallardTwo_socket.emit('set-cursor-type', mallards[mallardOne_socket.id].device_type);
@@ -255,6 +257,7 @@ function room_setup(mallardOne_socket, mallardTwo_socket) {
 
 	start_game(room_id);
 }
+
 
 function check_in(socket, room_id) {
 	var room_length = Object.keys(socket.rooms).length;
@@ -269,21 +272,23 @@ function check_in(socket, room_id) {
 		socket.join(room_id);
 	}
 
-
+	
 }
 
-function showAllRooms() {
+function showAllRooms(){
 
 	console.log("\nList of rooms:\n");
 
-	if (mallardRooms.length == 0) {
+	if(mallardRooms.length ==0){
 		console.log("There are no active rooms.");
-	} else {
-		for (var i = 0; i < mallardRooms.length; i++) {
-			console.log("\n Currently active room:" + mallardRooms[i].id);
+	}
+	else{
+		for(var i=0; i< mallardRooms.length; i++){
+			console.log("\n Currently active room:"+ mallardRooms[i].id);
 		}
 	}
 }
+
 
 function start_game(room_id) {
 
@@ -296,14 +301,28 @@ function start_game(room_id) {
 	var m2 = room_id.slice(20, 40);
 
 	var t = setInterval(function () {
-
-		if (mallards[m1] == undefined || mallards[m2] == undefined) {
+		
+		if(mallards[m1] == undefined || mallards[m2] == undefined)
+		{
 			clearInterval(t);
-		} else {
-			io.to(room_id).emit('timer', mallards[m1].username, mallards[m1].device_type, mallards[m2].username, mallards[m2].device_type, count); //send time
+		}
+		else{
+
+			var data = {
+				m1_user: mallards[m1].username,
+				m1_device: mallards[m1].device_type,
+				m2_user: mallards[m2].username,
+				m2_device: mallards[m2].device_type,
+				time: count
+			}
+
+			data = JSON.stringify(data);
+
+			io.to(room_id).emit('timer', data); //send time
+
 		}
 
-		if (count == 0) {
+		if(count == 0) {
 			clearInterval(t);
 
 			var berry_batch = make_berry_batch(); //make a batch of berries
@@ -312,8 +331,8 @@ function start_game(room_id) {
 
 			//console.log("Is M2 Connected? "+ mallards[m2].socket.connected);
 
-			if (mallards[m1] != undefined && mallards[m2] != undefined) {
-				if (mallards[m1].socket.connected && mallards[m2].socket.connected) {
+			if(mallards[m1] != undefined && mallards[m2] != undefined){
+				if(mallards[m1].socket.connected && mallards[m2].socket.connected){
 
 					io.to(room_id).emit('draw_batch', berry_batch); //send the batch to be drawn
 					io.to(room_id).emit('show_scores');
@@ -326,7 +345,7 @@ function start_game(room_id) {
 
 }
 
-function make_berry_batch() {
+function make_berry_batch() { //show some berries
 
 	var batch = [];
 
@@ -352,6 +371,7 @@ function make_berry_batch() {
 	return batch;
 
 }
+
 
 function random_int(max) {
 	return Math.floor(Math.random() * (max - 0 + 1) + 0);
