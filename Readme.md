@@ -10,7 +10,7 @@ A multiplayer game made with Node.js. Created by **Francisco Salinas**.
  4. Open a web browser and type in the following url: **`localhost:5000`**
 
 
-#Current Objectives
+# Current Objectives
 To make Munchy Mallards more than just a tech demo, the following should be added:
 
  1. Single Player
