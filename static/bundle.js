@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /**
  * bootbox.js [v4.4.0]
  *
@@ -31855,11 +31855,17 @@ var Howl = require("./js/howler.js");
 require("bootstrap");
 var bootbox = require('bootbox');
 var my_id;
-var active_connection = true;
+let active_connection = true;
+var dragOnly = false;
 
 var audio = new Howl({	src: ['/static/sounds/pop.mp3']   });
 var win_audio = new Howl({	src: ['/static/sounds/win.mp3']   });
 var lose_audio = new Howl({	src: ['/static/sounds/lose.mp3']   });
+
+var current_year = new Date();
+	current_year = current_year.getFullYear();
+	$("current-year").text(current_year);
+	
 
 var x_cursor_coordinate;
 var y_cursor_coordinate;
@@ -31921,7 +31927,19 @@ stage.on('touchmove mousemove', function(){
 
 
 layer.on('mouseup touchend', function (evt) { //when a user clicks on a berry
-	socket.emit('berry_click', evt.target.getAttr('id'));
+	
+
+	if(dragOnly == false){
+		socket.emit('berry_click', evt.target.getAttr('id'));
+	}else{
+		dragOnly = false;
+	}
+});
+
+
+layer.on('dragstart', function(evt) {
+	socket.emit('berry_move', evt.target.getAttr('id'));
+	dragOnly = true;
 });
 
 
@@ -32053,20 +32071,29 @@ socket.on('draw_batch', function (berry_batch) { //draw a batch
 	for(var index = 0; index< berry_batch.length; index++)
 	{
 
-		drawBerry(berry_batch[index].image, berry_batch[index].x, berry_batch[index].y, index);
+		drawBerry(berry_batch[index].image, berry_batch[index].x, berry_batch[index].y, berry_batch[index].width, berry_batch[index].height, index);
 
 	}
 
 });
 
-function drawBerry(image, x,y, index){
+function drawBerry(image, x,y, width, height, index){
 	Konva.Image.fromURL(image, function (strawberry) {
 		strawberry.setAttrs({
 			id: index,
 			x: x,
 			y: y,
-			width: 37,
-			height: 50,
+			width: width,
+			height: height,
+			draggable: true,
+			dragBoundFunc: function(pos) {
+				var newX = Math.max(0, Math.min(stage.getWidth()-width, pos.x));
+				var newY = Math.max(0, Math.min(stage.getHeight()-height, pos.y));
+				return {
+					x: newX,
+					y: newY
+				};
+			}
 		});
 
 		strawberry.on('mouseenter', function () {

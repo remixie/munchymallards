@@ -5,11 +5,17 @@ var Howl = require("./js/howler.js");
 require("bootstrap");
 var bootbox = require('bootbox');
 var my_id;
-var active_connection = true;
+let active_connection = true;
+var dragOnly = false;
 
 var audio = new Howl({	src: ['/static/sounds/pop.mp3']   });
 var win_audio = new Howl({	src: ['/static/sounds/win.mp3']   });
 var lose_audio = new Howl({	src: ['/static/sounds/lose.mp3']   });
+
+var current_year = new Date();
+	current_year = current_year.getFullYear();
+	$("current-year").text(current_year);
+	
 
 var x_cursor_coordinate;
 var y_cursor_coordinate;
@@ -71,7 +77,19 @@ stage.on('touchmove mousemove', function(){
 
 
 layer.on('mouseup touchend', function (evt) { //when a user clicks on a berry
-	socket.emit('berry_click', evt.target.getAttr('id'));
+	
+
+	if(dragOnly == false){
+		socket.emit('berry_click', evt.target.getAttr('id'));
+	}else{
+		dragOnly = false;
+	}
+});
+
+
+layer.on('dragstart', function(evt) {
+	socket.emit('berry_move', evt.target.getAttr('id'));
+	dragOnly = true;
 });
 
 
@@ -203,20 +221,29 @@ socket.on('draw_batch', function (berry_batch) { //draw a batch
 	for(var index = 0; index< berry_batch.length; index++)
 	{
 
-		drawBerry(berry_batch[index].image, berry_batch[index].x, berry_batch[index].y, index);
+		drawBerry(berry_batch[index].image, berry_batch[index].x, berry_batch[index].y, berry_batch[index].width, berry_batch[index].height, index);
 
 	}
 
 });
 
-function drawBerry(image, x,y, index){
+function drawBerry(image, x,y, width, height, index){
 	Konva.Image.fromURL(image, function (strawberry) {
 		strawberry.setAttrs({
 			id: index,
 			x: x,
 			y: y,
-			width: 37,
-			height: 50,
+			width: width,
+			height: height,
+			draggable: true,
+			dragBoundFunc: function(pos) {
+				var newX = Math.max(0, Math.min(stage.getWidth()-width, pos.x));
+				var newY = Math.max(0, Math.min(stage.getHeight()-height, pos.y));
+				return {
+					x: newX,
+					y: newY
+				};
+			}
 		});
 
 		strawberry.on('mouseenter', function () {

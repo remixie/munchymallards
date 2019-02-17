@@ -16,6 +16,26 @@ var mallards = []; //list of active mallard sockets
 var mallardQueue = []; //list of mallard IDs waiting for a game
 var mallardRooms = [];
 
+let Fruit = class{
+	constructor(image, height, width){
+		this._image = image;
+		this._height = height;
+		this._width = width;
+	}
+
+	get image(){
+		return this._image;
+	}
+	get height(){
+		return this._height;
+	}
+	get width(){
+		return this._width;
+	}
+}
+
+
+
 app.set('port', PORT);
 app.use('/static', express.static(__dirname + '/static'));
 
@@ -345,6 +365,8 @@ function start_game(room_id) {
 
 }
 
+
+
 function make_berry_batch() { //show some berries
 
 	var batch = [];
@@ -359,12 +381,19 @@ function make_berry_batch() { //show some berries
 
 	for (var c = 0; c < number_of_berries; c++) {
 
+		var berry_or_grape = random_int(1); // 0 for berry and 1 for grape
+		var fruit = "";
+
+		if(berry_or_grape == 0){ fruit = new Fruit('/static/img/strawberry-2.png',50,41); }
+
+		else{ fruit = new Fruit('/static/img/grape.png',41,41); }
+
 		batch[c] = {
 			x: random_int(width_of_garden - width_of_berry),
 			y: random_int(height_of_garden - height_of_berry),
-			image: '/static/img/strawberry-2.png',
-			width: width_of_berry,
-			height: height_of_berry
+			image: fruit.image,
+			width: fruit.width,
+			height: fruit.height
 		};
 	}
 
