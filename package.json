@@ -13,11 +13,11 @@
 	"author": "Francisco Salinas",
 	"dependencies": {
 		"bootbox": "^4.4.0",
-		"express": "^4.16.2",
-		"socket.io": "^2.0.4",
-		"bootstrap": "^3.3.7",
-		"jquery": "^3.2.1",
-		"typicons.font": "^2.0.9",
-		"konva": "^1.7.5"
+		"bootstrap": "^3.4.1",
+		"express": "^4.17.1",
+		"jquery": "^3.4.1",
+		"konva": "^1.7.6",
+		"socket.io": "^2.2.0",
+		"typicons.font": "^2.0.9"
 	}
 }
