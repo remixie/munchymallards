@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -16,7 +16,7 @@
 			<div id="title" class="col-md-12">
 				Munchy Mallards
 				<div class="caption">
-					<a href="https://remixie.com">Remixie Recreations</a> &copy; <current-year/>
+					<a href="https://remixie.com">Remixie Recreations</a> &copy; 2020
 				</div>
 			</div>
 		</div>
@@ -27,40 +27,40 @@
 					Show Info
 				</button>-->
 
-					<div class="col-md-2 hidden-sm hidden-xs" id="left_duck">
-						<div class="scores"> Opponent Score
-							<div id="op_score"></div>
-						</div>
+				<div class="col-md-2 hidden-sm hidden-xs" id="left_duck">
+					<div class="scores"> Opponent Score
+						<div id="op_score"></div>
+					</div>
+				</div>
+
+
+
+				<div id="center-div" class="col-md-8 col-sm-12 col-xs-12">
+
+					<div id="connection-message"></div>
+					<div id="results"></div>
+					<div id="timer"></div>
+
+					<div id="menu">
+						<button id="help" class="btn btn-warning">
+							Help
+						</button>
+						<button id="play" class="btn btn-warning">
+							Play
+						</button>
+						<div id="count"></div>
 					</div>
 
+					<div id="berries_remaining"></div>
+					<div id="stage"></div>
 
+				</div>
 
-					<div id="center-div" class="col-md-8 col-sm-12 col-xs-12">
-
-						<div id="connection-message"></div>
-						<div id="results"></div>
-						<div id="timer"></div>
-
-						<div id="menu">
-							<button id="help" class="btn btn-warning">
-								Help
-							</button>
-							<button id="play" class="btn btn-warning">
-								Play
-							</button>
-							<div id="count"></div>
-						</div>
-
-						<div id="berries_remaining"></div>
-						<div id="stage"></div>
-
+				<div class="col-md-2 hidden-sm hidden-xs" id="right_duck">
+					<div class="scores"> My Score
+						<div id="my_score"></div>
 					</div>
-
-					<div class="col-md-2 hidden-sm hidden-xs" id="right_duck">
-						<div class="scores"> My Score
-							<div id="my_score"></div>
-						</div>
-					</div>
+				</div>
 
 			</div>
 			<!-- content -->
@@ -72,4 +72,5 @@
 </body>
 <script src="/static/bundle.js"></script>
 <link rel='stylesheet' href="font/typicons.css">
+
 </html>
