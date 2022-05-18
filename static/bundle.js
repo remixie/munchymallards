@@ -14175,7 +14175,7 @@ return jQuery;
 } );
 
 },{}],16:[function(require,module,exports){
-(function (global){
+(function (global){(function (){
 /*
  * Konva JavaScript Framework v1.7.6
  * http://konvajs.github.io/
@@ -32397,7 +32397,7 @@ return jQuery;
   Konva.Collection.mapMethods(Konva.Arrow);
 })(Konva);
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],17:[function(require,module,exports){
 var socket = io();
 var Konva = require('konva');
@@ -32636,7 +32636,7 @@ function drawBerry(image, x,y, width, height, index){
 			y: y,
 			width: width,
 			height: height,
-			draggable: true,
+			draggable: false,
 			dragBoundFunc: function(pos) {
 				var newX = Math.max(0, Math.min(stage.getWidth()-width, pos.x));
 				var newY = Math.max(0, Math.min(stage.getHeight()-height, pos.y));
@@ -32793,7 +32793,7 @@ function show_play_again() {
 
 };
 },{"./js/howler.js":18,"bootbox":1,"bootstrap":2,"jquery":15,"konva":16}],18:[function(require,module,exports){
-(function (global){
+(function (global){(function (){
 /*!
  *  howler.js v2.0.5
  *  howlerjs.com
@@ -35047,5 +35047,5 @@ function show_play_again() {
 })();
 
 module.exports = Howl;
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[17]);

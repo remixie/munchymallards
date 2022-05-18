@@ -235,7 +235,7 @@ function drawBerry(image, x,y, width, height, index){
 			y: y,
 			width: width,
 			height: height,
-			draggable: true,
+			draggable: false,
 			dragBoundFunc: function(pos) {
 				var newX = Math.max(0, Math.min(stage.getWidth()-width, pos.x));
 				var newY = Math.max(0, Math.min(stage.getHeight()-height, pos.y));
